@@ -1,0 +1,51 @@
+<head>
+<style>
+.display-here {
+
+}
+</style>
+</head>
+
+<body>
+<button onclick=fromServer()>get from server</button>
+<p class='display-here'></p>
+
+<br><br>
+<textarea id="typing-place" rows="6" cols="50">
+</textarea>
+<br>
+<button onclick=areaGet()>send to server</button>
+
+<script>
+async function fromServer() {
+ const res = await fetch('http://localhost:8080/data').then(resp => resp.json());
+ console.log(res);
+ let strToDisplay = '';
+ for (const element of res) {
+  strToDisplay += JSON.stringify(element) + '<br>';
+ }
+ document.getElementsByClassName('display-here')[0].innerHTML = strToDisplay;
+ // toServer();
+}
+
+async function toServer(dataPiece) {
+ const dataItem = JSON.parse(dataPiece);
+ const res = await fetch('http://localhost:8080/data', {
+  method: 'POST',
+  headers: {
+   'Content-type': 'application/json',
+  },
+  body: JSON.stringify(dataItem),
+ }).then(resp => resp.json());
+ console.log(res);
+}
+
+function areaGet() {
+ toServer(document.getElementById('typing-place').value);
+}
+
+//fromServer();
+
+// {id: 3, label: 'Gary', dataField: 'Omnipotential Shatter'}
+</script>
+</body>
