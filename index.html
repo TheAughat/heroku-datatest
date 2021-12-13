@@ -18,7 +18,7 @@
 
 <script>
 async function fromServer() {
- const res = await fetch('http://localhost:8080/data').then(resp => resp.json());
+ const res = await fetch('https://heroku-datatest.herokuapp.com/data').then(resp => resp.json());
  console.log(res);
  let strToDisplay = '';
  for (const element of res) {
@@ -30,7 +30,7 @@ async function fromServer() {
 
 async function toServer(dataPiece) {
  const dataItem = JSON.parse(dataPiece);
- const res = await fetch('http://localhost:8080/data', {
+ const res = await fetch('https://heroku-datatest.herokuapp.com/data', {
   method: 'POST',
   headers: {
    'Content-type': 'application/json',
